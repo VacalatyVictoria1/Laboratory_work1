@@ -1,6 +1,5 @@
 import java.text.ParseException;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +8,8 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args)
+            throws ParseException {
         Scanner num = new Scanner(System.in);
         int number = 0;
         do {
@@ -66,8 +66,10 @@ public class Main {
         System.out.println(books.toString());
     }
 
-    public static void task2() throws ParseException {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    public static void task2()
+    {
+//            throws ParseException {
+//        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 //        ZoneId zid = ZoneId.of("Europe/Amsterdam");
 
         List<Film> films = new ArrayList<>();
@@ -79,13 +81,25 @@ public class Main {
         for (int i = 0; i < countOfFilm; i++) {
             Film film = new Film();
 
-//            System.out.println("Enter the title of the movie: ");
-//            String nameoffilm = in.next();
-//            film.setNamefilm(nameoffilm);
+            System.out.println("Enter the title of the movie: ");
+            String nameoffilm = in.next();
+            film.setNamefilm(nameoffilm);
 
-            System.out.print("Enter the date and time of the session: ");
-            String dateandtime = in.next();
-            film.setDateandtime(LocalDateTime.parse(dateandtime, dtf));
+//            System.out.print("Enter the date and time of the session: ");
+            while (true) {
+                System.out.print("Enter the date and time (dd/MM/yyyy date format && hh:mm time format): ");
+                String scannedDate = in.nextLine();
+
+                try {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+                    LocalDateTime dateandtime = LocalDateTime.parse(scannedDate, formatter);
+                    film.setDateandtime(dateandtime);
+                    break;
+                } catch (Exception ignored) {
+                }
+            }
+//            String dateandtime = in.next();
+//            film.setDateandtime(LocalDateTime.parse(dateandtime, dtf));
 
             System.out.println("Enter genre: ");
             String genre = in.next();
@@ -99,7 +113,6 @@ public class Main {
             film.setBudget(budget);
             films.add(film);
         }
-
 
         //  StringBuilder answer = new StringBuilder();
 
